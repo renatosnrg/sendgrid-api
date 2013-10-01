@@ -1,5 +1,9 @@
 # Sendgrid::Api
 
+[![Build Status](https://secure.travis-ci.org/renatosnrg/sendgrid-api.png?branch=master)][gem]
+
+[gem]: http://travis-ci.org/renatosnrg/sendgrid-api
+
 A Ruby interface to the SendGrid API.
 
 ## Installation
