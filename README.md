@@ -1,8 +1,12 @@
 # Sendgrid::Api
 
 [![Build Status](https://secure.travis-ci.org/renatosnrg/sendgrid-api.png?branch=master)][gem]
+[![Code Climate](https://codeclimate.com/github/renatosnrg/sendgrid-api.png)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/renatosnrg/sendgrid-api/badge.png)][coverage]
 
 [gem]: http://travis-ci.org/renatosnrg/sendgrid-api
+[codeclimate]: https://codeclimate.com/github/renatosnrg/sendgrid-api
+[coverage]: https://coveralls.io/r/renatosnrg/sendgrid-api
 
 A Ruby interface to the SendGrid API.
 
