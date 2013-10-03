@@ -1,6 +1,7 @@
-require "sendgrid/api/version"
+require 'sendgrid/api/version'
+require 'sendgrid/api/client'
 
 module Sendgrid
-  module Api
+  module API
   end
 end

@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     sendgrid-api (0.0.1)
+      faraday (~> 0.8.8)
+      json (~> 1.8.0)
 
 GEM
   remote: https://rubygems.org/
@@ -13,8 +15,12 @@ GEM
       term-ansicolor
       thor
     diff-lcs (1.2.4)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
+    json (1.8.0)
     mime-types (1.25)
     multi_json (1.8.0)
+    multipart-post (1.2.0)
     rake (10.1.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)

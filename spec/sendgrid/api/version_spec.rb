@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 module Sendgrid
-  describe Api do
+  describe API do
 
     it 'has a non-null VERSION constant' do
-      Api::VERSION.should_not be_nil
+      API::VERSION.should_not be_nil
     end
 
   end
