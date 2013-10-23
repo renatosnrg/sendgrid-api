@@ -16,7 +16,7 @@ module Sendgrid
           # View your SendGrid profile
           #
           # @see http://sendgrid.com/docs/API_Reference/Web_API/profile.html
-          # @return profile [Profile] A Web::Profile object.
+          # @return profile [Profile] An Entities::Profile object.
           def get
             perform_request(Entities::Profile, 'profile.get.json').first
           end
@@ -24,8 +24,8 @@ module Sendgrid
           # Update your SendGrid profile
           #
           # @see http://sendgrid.com/docs/API_Reference/Web_API/profile.html#-set
-          # @param profile [Profile] A Web::Profile object.
-          # @return response [Response] A Response object.
+          # @param profile [Profile] An Entities::Profile object.
+          # @return response [Response] An Entities::Response object.
           def set(profile)
             perform_request(Entities::Response, 'profile.set.json', profile.as_json)
           end

@@ -60,6 +60,39 @@ module Sendgrid
             end
           end
 
+          describe 'online tests', :online => true do
+            include_examples 'online tests'
+
+            context 'when credentials are valid' do
+              let(:resource) { REST::Resource.new(env_user, env_key) }
+
+              describe '#advanced' do
+                context 'with required params' do
+                  # 90 days from now
+                  let(:start_date) { (Time.now - (90*24*60*60)).strftime("%Y-%m-%d") }
+
+                  it 'should get stats' do
+                    subject.advanced(:start_date => start_date, :data_type => :global).should_not be_empty
+                  end
+                end
+
+                context 'without required params' do
+                  it 'should raise error' do
+                    expect { subject.advanced }.to raise_error(REST::Errors::BadRequest)
+                  end
+                end
+              end
+            end
+
+            context 'when credentials are invalid' do
+              describe '#advanced' do
+                it 'should raise error' do
+                  expect { subject.advanced }.to raise_error(REST::Errors::Forbidden)
+                end
+              end
+            end
+          end
+
         end
       end
     end

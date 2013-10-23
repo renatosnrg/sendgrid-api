@@ -82,6 +82,43 @@ module Sendgrid
             end
           end
 
+          describe 'online tests', :online => true do
+            include_examples 'online tests'
+
+            context 'when credentials are valid' do
+              let(:resource) { REST::Resource.new(env_user, env_key) }
+
+              describe '#get' do
+                it 'should get profile' do
+                  subject.get.should be_instance_of(Entities::Profile)
+                end
+              end
+
+              describe '#set' do
+                it 'should update profile' do
+                  profile = subject.get
+                  subject.set(profile).success?.should be_true
+                end
+              end
+            end
+
+            context 'when credentials are invalid' do
+              describe '#get' do
+                it 'should raise error' do
+                  expect { subject.get }.to raise_error(REST::Errors::Unauthorized)
+                end
+              end
+
+              describe '#set' do
+                let(:profile) { Entities::Profile.new(:first_name => 'Brian', :last_name => 'O\'Neill') }
+
+                it 'should raise error' do
+                  expect { subject.set(profile) }.to raise_error(REST::Errors::Unauthorized)
+                end
+              end
+            end
+          end
+
         end
       end
     end
