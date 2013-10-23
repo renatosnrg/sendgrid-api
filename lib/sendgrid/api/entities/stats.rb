@@ -5,7 +5,8 @@ module Sendgrid
     module Entities
       class Stats < Entity
 
-        attribute :delivered, :request, :unique_open, :unique_click, :processed, :date, :open, :click
+        attribute :delivered, :request, :unique_open, :unique_click, :processed, :date, :open, :click,
+                  :blocked, :spamreport, :drop, :bounce, :deferred
 
       end
     end

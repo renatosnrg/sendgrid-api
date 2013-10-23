@@ -30,6 +30,10 @@ module Sendgrid
           end
         end
 
+        def respond_to?(method, include_private = false)
+          super || has_attribute?(method)
+        end
+
         private
 
         def has_attribute?(attribute)

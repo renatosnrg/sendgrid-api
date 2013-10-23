@@ -9,25 +9,30 @@ module Sendgrid
 
         attr_reader :user, :key
 
-        ENDPOINT = 'https://sendgrid.com/api'
+        ENDPOINT = 'https://sendgrid.com/api'.freeze
 
         def initialize(user, key)
           @user = user
           @key = key
         end
 
-        def get(url, params = {})
-          connection.get do |req|
-            req.url url
-            req.params = params.merge(authentication_params)
-            req.headers['Content-Type'] = 'application/json'
-          end
+        def post(url, params = {})
+          request(:post, url, params)
         end
 
         private
 
+        def request(method, url, params = {})
+          params.merge!(authentication_params)
+          connection.send(method, url, params)
+        rescue Faraday::Error::ClientError, JSON::ParserError
+          raise Errors::Unknown
+        end
+
         def middleware
           @middleware ||= Faraday::Builder.new do |builder|
+            # form-encode POST params
+            builder.request :url_encoded
             # Parse response errors
             builder.use Response::ParseError
             # Parse JSON response bodies

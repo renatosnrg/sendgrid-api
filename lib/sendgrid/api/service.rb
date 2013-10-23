@@ -15,7 +15,7 @@ module Sendgrid
       private
 
       def request(url, params = {})
-        resource.get(url, params)
+        resource.post(url, params)
       end
 
     end

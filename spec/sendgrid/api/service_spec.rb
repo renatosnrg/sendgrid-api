@@ -19,7 +19,7 @@ module Sendgrid
 
         context 'with params' do
           before do
-            resource.should_receive(:get).with(url, params)
+            resource.should_receive(:post).with(url, params)
           end
           let(:params) { double('params') }
 
@@ -30,7 +30,7 @@ module Sendgrid
 
         context 'without params' do
           before do
-            resource.should_receive(:get).with(url, {})
+            resource.should_receive(:post).with(url, {})
           end
 
           it 'should perform a request' do

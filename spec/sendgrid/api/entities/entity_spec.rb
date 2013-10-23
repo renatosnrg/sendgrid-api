@@ -150,8 +150,9 @@ module Sendgrid
           context 'creating entity with no attributes' do
             subject { entity }
             let(:entity) { described_class.new }
-            let(:attr1) { 'attr1 value' }
-            let(:attr2) { 'attr2 value' }
+
+            it { should respond_to(:attr1) }
+            it { should respond_to(:attr2) }
 
             its(:attr1) { should be_nil }
             its(:attr2) { should be_nil }
@@ -194,6 +195,9 @@ module Sendgrid
             let(:entity) { described_class.new(:attr1 => attr1, :attr2 => attr2) }
             let(:attr1) { 'attr1 value' }
             let(:attr2) { 'attr2 value' }
+
+            it { should respond_to(:attr1) }
+            it { should respond_to(:attr2) }
 
             its(:attr1) { should == attr1 }
             its(:attr2) { should == attr2 }
