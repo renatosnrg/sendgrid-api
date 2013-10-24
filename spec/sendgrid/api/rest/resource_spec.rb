@@ -66,6 +66,8 @@ module Sendgrid
             it 'should perform a request' do
               subject.send(:request, :post, url, params)
               sg_mock.a_post(url, params).should have_been_made
+              params.should_not include(:api_user)
+              params.should_not include(:api_key)
             end
           end
 

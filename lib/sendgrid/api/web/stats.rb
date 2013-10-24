@@ -24,8 +24,8 @@ module Sendgrid
           # @option options [String] :aggregated_by Aggregate the data by the given period (default is day): day, week or month.
           # @option options [String] :country Get stats for each region/state for the given country. Only US (United States) and CA (Canada) is supported at this time.
           # @return stats [Stats] An array of Entities::Stats object.
-          def advanced(params = {})
-            perform_request(Entities::Stats, 'stats.getAdvanced.json', params)
+          def advanced(options = {})
+            perform_request(Entities::Stats, 'stats.getAdvanced.json', options)
           end
 
         end

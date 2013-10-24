@@ -23,7 +23,7 @@ module Sendgrid
 
               subject { service.get }
 
-              it 'should perform the request' do
+              it 'performs the request' do
                 subject
                 sg_mock.a_post(url).should have_been_made
               end
@@ -51,7 +51,7 @@ module Sendgrid
                 sg_mock.stub_post(url).to_return(:body => fixture('unauthorized.json'))
               end
 
-              it 'should raise error' do
+              it 'raises error' do
                 expect { service.get }.to raise_error(REST::Errors::Unauthorized)
               end
             end
@@ -76,7 +76,7 @@ module Sendgrid
                 sg_mock.stub_post(url, profile.as_json).to_return(:body => fixture('unauthorized.json'))
               end
 
-              it 'should raise error' do
+              it 'raises error' do
                 expect { service.set(profile) }.to raise_error(REST::Errors::Unauthorized)
               end
             end
@@ -89,13 +89,13 @@ module Sendgrid
               let(:resource) { REST::Resource.new(env_user, env_key) }
 
               describe '#get' do
-                it 'should get profile' do
+                it 'gets profile' do
                   subject.get.should be_instance_of(Entities::Profile)
                 end
               end
 
               describe '#set' do
-                it 'should update profile' do
+                it 'updates profile' do
                   profile = subject.get
                   subject.set(profile).success?.should be_true
                 end
@@ -104,7 +104,7 @@ module Sendgrid
 
             context 'when credentials are invalid' do
               describe '#get' do
-                it 'should raise error' do
+                it 'raises error' do
                   expect { subject.get }.to raise_error(REST::Errors::Unauthorized)
                 end
               end
@@ -112,7 +112,7 @@ module Sendgrid
               describe '#set' do
                 let(:profile) { Entities::Profile.new(:first_name => 'Brian', :last_name => 'O\'Neill') }
 
-                it 'should raise error' do
+                it 'raises error' do
                   expect { subject.set(profile) }.to raise_error(REST::Errors::Unauthorized)
                 end
               end

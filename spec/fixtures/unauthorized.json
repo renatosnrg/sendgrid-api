@@ -1,6 +1,6 @@
 {
-  "error":{
-    "code":401,
-    "message":"Permission denied, wrong credentials"
+  "error": {
+    "code": 401,
+    "message": "Permission denied, wrong credentials"
   }
 }

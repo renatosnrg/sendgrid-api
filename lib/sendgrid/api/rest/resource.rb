@@ -23,7 +23,7 @@ module Sendgrid
         private
 
         def request(method, url, params = {})
-          params.merge!(authentication_params)
+          params = params.merge(authentication_params)
           connection.send(method, url, params)
         rescue Faraday::Error::ClientError, JSON::ParserError
           raise Errors::Unknown

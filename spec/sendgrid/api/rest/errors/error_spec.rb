@@ -44,38 +44,51 @@ module Sendgrid
             end
 
             context 'when response has body error' do
-              context 'known status' do
-                let(:env) do
-                  { :status => 200,
-                    :body => { :error => { :code => 400 } } }
+              context 'when error is a Hash' do
+                context 'known status' do
+                  let(:env) do
+                    { :status => 200,
+                      :body => { :error => { :code => 400 } } }
+                  end
+
+                  subject { described_class.from_response(env) }
+
+                  it { should be_instance_of(Errors::BadRequest) }
                 end
 
-                subject { described_class.from_response(env) }
+                context 'unknown status' do
+                  let(:env) do
+                    { :status => 200,
+                      :body => { :error => { :code => 413 } } }
+                  end
 
-                it { should be_instance_of(Errors::BadRequest) }
+                  subject { described_class.from_response(env) }
+
+                  it { should be_instance_of(Errors::Unknown) }
+                end
+
+                context 'with message' do
+                  let(:env) do
+                    { :status => 200,
+                      :body => { :error => { :code => 400,
+                                             :message => 'error message' } } }
+                  end
+
+                  subject { described_class.from_response(env) }
+
+                  it { should == Errors::BadRequest.new('error message') }
+                end
               end
 
-              context 'unknown status' do
+              context 'when error is a String' do
                 let(:env) do
                   { :status => 200,
-                    :body => { :error => { :code => 413 } } }
+                    :body => { :error => 'error message' } }
                 end
 
                 subject { described_class.from_response(env) }
 
-                it { should be_instance_of(Errors::Unknown) }
-              end
-
-              context 'with message' do
-                let(:env) do
-                  { :status => 200,
-                    :body => { :error => { :code => 400,
-                                           :message => 'error message' } } }
-                end
-
-                subject { described_class.from_response(env) }
-
-                it { should == Errors::BadRequest.new('error message') }
+                it { should == Errors::UnprocessableEntity.new('error message') }
               end
             end
 

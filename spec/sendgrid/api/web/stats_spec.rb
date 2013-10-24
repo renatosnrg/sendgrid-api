@@ -23,7 +23,7 @@ module Sendgrid
 
               subject { service.advanced }
 
-              it 'should perform the request' do
+              it 'performs the request' do
                 subject
                 sg_mock.a_post(url).should have_been_made
               end
@@ -43,7 +43,7 @@ module Sendgrid
                 its(:deferred) { should == 1975 }
                 its(:processed) { should == 5302 }
                 its(:date) { should == '2013-06-18' }
-                its(:open) { pending('should debug open method') }
+                its(:open) { pending('debugs open method') }
                 its(:click) { should == 11 }
                 its(:blocked) { should == 29 }
               end
@@ -54,7 +54,7 @@ module Sendgrid
                 sg_mock.stub_post(url).to_return(:body => fixture('forbidden.json'), :status => 403)
               end
 
-              it 'should raise error' do
+              it 'raises error' do
                 expect { service.advanced }.to raise_error(REST::Errors::Forbidden)
               end
             end
@@ -71,13 +71,13 @@ module Sendgrid
                   # 90 days from now
                   let(:start_date) { (Time.now - (90*24*60*60)).strftime("%Y-%m-%d") }
 
-                  it 'should get stats' do
+                  it 'gets stats' do
                     subject.advanced(:start_date => start_date, :data_type => :global).should_not be_empty
                   end
                 end
 
                 context 'without required params' do
-                  it 'should raise error' do
+                  it 'raises error' do
                     expect { subject.advanced }.to raise_error(REST::Errors::BadRequest)
                   end
                 end
@@ -86,7 +86,7 @@ module Sendgrid
 
             context 'when credentials are invalid' do
               describe '#advanced' do
-                it 'should raise error' do
+                it 'raises error' do
                   expect { subject.advanced }.to raise_error(REST::Errors::Forbidden)
                 end
               end

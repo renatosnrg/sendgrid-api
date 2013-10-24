@@ -15,7 +15,6 @@ A Ruby interface to the SendGrid API.
 The SendGrid API is being covered on demand. The next APIs to be supported are the complete [Marketing Email API](http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/index.html) and [Mail](http://sendgrid.com/docs/API_Reference/Web_API/mail.html) (Web API).
 
 Check which SendGrid APIs are currently being covered by this gem:
-
 [https://github.com/renatosnrg/sendgrid-api/wiki/SendGrid-API-Coverage][coverage]
 
 [coverage]: https://github.com/renatosnrg/sendgrid-api/wiki/SendGrid-API-Coverage

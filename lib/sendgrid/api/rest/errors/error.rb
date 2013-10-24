@@ -27,8 +27,12 @@ module Sendgrid
             def body_error(env)
               body = env[:body]
               if body.is_a?(Hash) && body.has_key?(:error)
-                status = body[:error][:code]
-                message = body[:error][:message]
+                status, message = case body[:error]
+                                  when ::Hash
+                                    [ body[:error][:code], body[:error][:message] ]
+                                  when ::String
+                                    [ 422, body[:error] ]
+                                  end
                 error_class(status).new(message)
               else
                 nil
@@ -47,11 +51,13 @@ module Sendgrid
         class Unauthorized < Error; end
         class Forbidden < Error; end
         class Unknown < Error; end
+        class UnprocessableEntity < Error; end
 
         CODES = {
           400 => BadRequest,
           401 => Unauthorized,
           403 => Forbidden,
+          422 => UnprocessableEntity
         }.freeze
 
       end
