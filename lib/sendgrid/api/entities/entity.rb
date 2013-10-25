@@ -11,8 +11,8 @@ module Sendgrid
           @attributes = sanitize_attributes(attributes)
         end
 
-        def to_json
-          as_json.to_json
+        def to_json(*a)
+          as_json.to_json(*a)
         end
 
         def as_json

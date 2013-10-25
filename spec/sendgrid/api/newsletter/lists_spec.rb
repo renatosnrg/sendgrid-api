@@ -48,7 +48,7 @@ module Sendgrid
 
             context 'when list already exists' do
               before do
-                stub_post.to_return(:body => fixture('list_already_exists.json'))
+                stub_post.to_return(:body => fixture('lists/list_already_exists.json'))
               end
 
               it 'raises error' do
@@ -94,7 +94,7 @@ module Sendgrid
 
             context 'when list already exists' do
               before do
-                stub_post.to_return(:body => fixture('list_already_exists.json'), :status => 401)
+                stub_post.to_return(:body => fixture('lists/list_already_exists.json'), :status => 401)
               end
 
               it 'raises error' do
@@ -104,7 +104,7 @@ module Sendgrid
 
             context 'when list does not exist' do
               before do
-                stub_post.to_return(:body => fixture('list_does_not_exist.json'), :status => 401)
+                stub_post.to_return(:body => fixture('lists/list_does_not_exist.json'), :status => 401)
               end
 
               it 'raises error' do
@@ -148,7 +148,7 @@ module Sendgrid
 
             context 'when list does not exist' do
               before do
-                stub_post.to_return(:body => fixture('list_does_not_exist.json'))
+                stub_post.to_return(:body => fixture('lists/list_does_not_exist.json'))
               end
 
               it 'raises error' do
@@ -169,7 +169,7 @@ module Sendgrid
               let(:response) { service.get }
 
               before do
-                stub_post.to_return(:body => fixture('lists.json'))
+                stub_post.to_return(:body => fixture('lists/lists.json'))
               end
 
               it { should_not be_empty }
@@ -184,7 +184,7 @@ module Sendgrid
 
             context 'when get a list successfully' do
               before do
-                stub_post.to_return(:body => fixture('list.json'))
+                stub_post.to_return(:body => fixture('lists/list.json'))
               end
 
               context 'with name' do
@@ -213,7 +213,7 @@ module Sendgrid
 
             context 'when not found' do
               before do
-                stub_post.to_return(:body => fixture('list_not_found.json'), :status => 401)
+                stub_post.to_return(:body => fixture('lists/list_not_found.json'), :status => 401)
               end
 
               it 'raises error' do

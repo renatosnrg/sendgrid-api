@@ -2,6 +2,7 @@ require 'sendgrid/api/rest/resource'
 require 'sendgrid/api/web/profile'
 require 'sendgrid/api/web/stats'
 require 'sendgrid/api/newsletter/lists'
+require 'sendgrid/api/newsletter/emails'
 
 module Sendgrid
   module API
@@ -10,6 +11,7 @@ module Sendgrid
       include Web::Profile
       include Web::Stats
       include Newsletter::Lists
+      include Newsletter::Emails
 
       attr_reader :user, :key
 
