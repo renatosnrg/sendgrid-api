@@ -40,7 +40,7 @@ module Sendgrid
           #
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/lists.html#-get
           # @param list [String, Entities::List] An existing list name or Entities::List object. Optional.
-          # @return [List] An array of Entities::List objects.
+          # @return [Array<List>] An array of Entities::List objects.
           def get(list = nil)
             params = { :list => extract_listname(list) } if list
             perform_request(Entities::List, 'newsletter/lists/get.json', params || {})

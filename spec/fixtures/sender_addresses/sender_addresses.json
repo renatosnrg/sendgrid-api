@@ -1,0 +1,11 @@
+[
+  {
+    "identity": "sendgrid"
+  },
+  {
+    "identity": "sendgrid helpdesk"
+  },
+  {
+    "identity": "sendgrid developers"
+  }
+]

@@ -57,7 +57,7 @@ module Sendgrid
             context 'when permission failed' do
               before do
                 sg_mock.stub_post(url, :list => listname, :data => [email.to_json]).
-                  to_return(:body => fixture('forbidden.json'), :status => 403)
+                  to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
               subject { service.add(listname, email) }
               it 'raises error' do
@@ -102,7 +102,7 @@ module Sendgrid
             context 'when permission failed' do
               before do
                 sg_mock.stub_post(url, :list => listname).
-                  to_return(:body => fixture('forbidden.json'), :status => 403)
+                  to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
               subject { service.get(listname) }
               it 'raises error' do
@@ -153,7 +153,7 @@ module Sendgrid
             context 'when permission failed' do
               before do
                 sg_mock.stub_post(url, :list => listname, :email => [email.email]).
-                  to_return(:body => fixture('forbidden.json'), :status => 403)
+                  to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
               subject { service.delete(listname, email) }
               it 'raises error' do
@@ -245,6 +245,26 @@ module Sendgrid
                     response.any?.should be_true
                     response.removed.should == 2
                   end
+                end
+              end
+            end
+
+            context 'when credentials are invalid' do
+              describe '#add' do
+                it 'raises an error' do
+                  expect { subject.add(listname, email) }.to raise_error(REST::Errors::Forbidden)
+                end
+              end
+
+              describe '#get' do
+                it 'raises an error' do
+                  expect { subject.get(listname, email) }.to raise_error(REST::Errors::Forbidden)
+                end
+              end
+
+              describe '#delete' do
+                it 'raises an error' do
+                  expect { subject.delete(listname, email) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
             end

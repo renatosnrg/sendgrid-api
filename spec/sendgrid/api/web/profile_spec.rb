@@ -48,7 +48,7 @@ module Sendgrid
 
             context 'when permission failed' do
               before do
-                sg_mock.stub_post(url).to_return(:body => fixture('unauthorized.json'))
+                sg_mock.stub_post(url).to_return(:body => fixture('errors/unauthorized.json'))
               end
 
               it 'raises error' do
@@ -73,7 +73,7 @@ module Sendgrid
 
             context 'when permission failed' do
               before do
-                sg_mock.stub_post(url, profile.as_json).to_return(:body => fixture('unauthorized.json'))
+                sg_mock.stub_post(url, profile.as_json).to_return(:body => fixture('errors/unauthorized.json'))
               end
 
               it 'raises error' do

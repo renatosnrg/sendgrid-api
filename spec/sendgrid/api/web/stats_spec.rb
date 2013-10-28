@@ -51,7 +51,7 @@ module Sendgrid
 
             context 'when permission failed' do
               before do
-                sg_mock.stub_post(url).to_return(:body => fixture('forbidden.json'), :status => 403)
+                sg_mock.stub_post(url).to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
 
               it 'raises error' do

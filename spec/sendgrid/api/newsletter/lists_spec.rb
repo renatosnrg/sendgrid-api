@@ -38,20 +38,20 @@ module Sendgrid
 
             context 'when permission failed' do
               before do
-                stub_post.to_return(:body => fixture('forbidden.json'), :status => 403)
+                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::Forbidden)
               end
             end
 
             context 'when list already exists' do
               before do
-                stub_post.to_return(:body => fixture('lists/list_already_exists.json'))
+                stub_post.to_return(:body => fixture('errors/already_exists.json'))
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::UnprocessableEntity)
               end
             end
@@ -84,30 +84,30 @@ module Sendgrid
 
             context 'when permission failed' do
               before do
-                stub_post.to_return(:body => fixture('forbidden.json'), :status => 403)
+                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::Forbidden)
               end
             end
 
             context 'when list already exists' do
               before do
-                stub_post.to_return(:body => fixture('lists/list_already_exists.json'), :status => 401)
+                stub_post.to_return(:body => fixture('errors/already_exists.json'), :status => 401)
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::Unauthorized)
               end
             end
 
             context 'when list does not exist' do
               before do
-                stub_post.to_return(:body => fixture('lists/list_does_not_exist.json'), :status => 401)
+                stub_post.to_return(:body => fixture('errors/does_not_exist.json'), :status => 401)
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::Unauthorized)
               end
             end
@@ -138,20 +138,20 @@ module Sendgrid
 
             context 'when permission failed' do
               before do
-                stub_post.to_return(:body => fixture('forbidden.json'), :status => 403)
+                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::Forbidden)
               end
             end
 
             context 'when list does not exist' do
               before do
-                stub_post.to_return(:body => fixture('lists/list_does_not_exist.json'))
+                stub_post.to_return(:body => fixture('errors/does_not_exist.json'))
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::UnprocessableEntity)
               end
             end
@@ -203,10 +203,10 @@ module Sendgrid
 
             context 'when permission failed' do
               before do
-                stub_post.to_return(:body => fixture('forbidden.json'), :status => 403)
+                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::Forbidden)
               end
             end
@@ -216,7 +216,7 @@ module Sendgrid
                 stub_post.to_return(:body => fixture('lists/list_not_found.json'), :status => 401)
               end
 
-              it 'raises error' do
+              it 'raises an error' do
                 expect { subject }.to raise_error(REST::Errors::Unauthorized)
               end
             end
