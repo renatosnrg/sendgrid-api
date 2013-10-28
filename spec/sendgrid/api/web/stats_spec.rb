@@ -15,13 +15,13 @@ module Sendgrid
 
           describe '#advanced' do
             let(:url) { 'stats.getAdvanced.json' }
+            let(:stub_post) { sg_mock.stub_post(url) }
+            subject { service.advanced }
 
             context 'when request is successfull' do
               before do
-                sg_mock.stub_post(url).to_return(:body => fixture('stats.json'))
+                stub_post.to_return(:body => fixture('stats.json'))
               end
-
-              subject { service.advanced }
 
               it 'performs the request' do
                 subject
@@ -50,13 +50,7 @@ module Sendgrid
             end
 
             context 'when permission failed' do
-              before do
-                sg_mock.stub_post(url).to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
-
-              it 'raises error' do
-                expect { service.advanced }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
           end
 

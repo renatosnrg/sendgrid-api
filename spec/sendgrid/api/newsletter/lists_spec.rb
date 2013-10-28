@@ -21,39 +21,23 @@ module Sendgrid
             subject { service.add(listname) }
 
             context 'when add a list successfully' do
-              before do
-                stub_post.to_return(:body => fixture('success.json'))
-              end
-
               context 'with name' do
-                its(:success?) { should be_true }
+                it_behaves_like 'a success response'
               end
 
               context 'with object' do
                 let(:list) { Entities::List.new(:list => listname) }
                 subject { service.add(list) }
-                its(:success?) { should be_true }
+                it_behaves_like 'a success response'
               end
             end
 
             context 'when permission failed' do
-              before do
-                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
 
             context 'when list already exists' do
-              before do
-                stub_post.to_return(:body => fixture('errors/already_exists.json'))
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::UnprocessableEntity)
-              end
+              it_behaves_like 'an already exists response'
             end
           end
 
@@ -66,50 +50,28 @@ module Sendgrid
             subject { service.edit(listname, newlistname) }
 
             context 'when edit a list successfully' do
-              before do
-                stub_post.to_return(:body => fixture('success.json'))
-              end
-
               context 'with name' do
-                its(:success?) { should be_true }
+                it_behaves_like 'a success response'
               end
 
               context 'with object' do
                 let(:list) { Entities::List.new(:list => listname) }
                 let(:newlist) { Entities::List.new(:list => newlistname) }
                 subject { service.edit(list, newlist) }
-                its(:success?) { should be_true }
+                it_behaves_like 'a success response'
               end
             end
 
             context 'when permission failed' do
-              before do
-                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
 
             context 'when list already exists' do
-              before do
-                stub_post.to_return(:body => fixture('errors/already_exists.json'), :status => 401)
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::Unauthorized)
-              end
+              it_behaves_like 'an already exists response'
             end
 
             context 'when list does not exist' do
-              before do
-                stub_post.to_return(:body => fixture('errors/does_not_exist.json'), :status => 401)
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::Unauthorized)
-              end
+              it_behaves_like 'a does not exist response'
             end
           end
 
@@ -121,39 +83,23 @@ module Sendgrid
             subject { service.delete(listname) }
 
             context 'when delete a list successfully' do
-              before do
-                stub_post.to_return(:body => fixture('success.json'))
-              end
-
               context 'with name' do
-                its(:success?) { should be_true }
+                it_behaves_like 'a success response'
               end
 
               context 'with object' do
                 let(:list) { Entities::List.new(:list => listname) }
                 subject { service.delete(list) }
-                its(:success?) { should be_true }
+                it_behaves_like 'a success response'
               end
             end
 
             context 'when permission failed' do
-              before do
-                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
 
             context 'when list does not exist' do
-              before do
-                stub_post.to_return(:body => fixture('errors/does_not_exist.json'))
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::UnprocessableEntity)
-              end
+              it_behaves_like 'a does not exist response'
             end
           end
 
@@ -202,23 +148,11 @@ module Sendgrid
             end
 
             context 'when permission failed' do
-              before do
-                stub_post.to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
 
             context 'when not found' do
-              before do
-                stub_post.to_return(:body => fixture('lists/list_not_found.json'), :status => 401)
-              end
-
-              it 'raises an error' do
-                expect { subject }.to raise_error(REST::Errors::Unauthorized)
-              end
+              it_behaves_like 'a does not exist response'
             end
           end
 

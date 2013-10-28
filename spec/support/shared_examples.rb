@@ -52,3 +52,13 @@ shared_examples 'a does not exist response' do
     expect { subject }.to raise_error(Sendgrid::API::REST::Errors::Unauthorized)
   end
 end
+
+shared_examples 'an already exists response' do
+  before do
+    stub_post.to_return(:body => fixture('errors/already_exists.json'))
+  end
+
+  it 'raises an error' do
+    expect { subject }.to raise_error(Sendgrid::API::REST::Errors::UnprocessableEntity)
+  end
+end

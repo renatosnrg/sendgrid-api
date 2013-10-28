@@ -55,14 +55,9 @@ module Sendgrid
             end
 
             context 'when permission failed' do
-              before do
-                sg_mock.stub_post(url, :list => listname, :data => [email.to_json]).
-                  to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
+              let(:stub_post) { sg_mock.stub_post(url, :list => listname, :data => [email.to_json]) }
               subject { service.add(listname, email) }
-              it 'raises error' do
-                expect { subject }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
           end
 
@@ -100,14 +95,9 @@ module Sendgrid
             end
 
             context 'when permission failed' do
-              before do
-                sg_mock.stub_post(url, :list => listname).
-                  to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
+              let(:stub_post) { sg_mock.stub_post(url, :list => listname) }
               subject { service.get(listname) }
-              it 'raises error' do
-                expect { subject }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
           end
 
@@ -151,14 +141,9 @@ module Sendgrid
             end
 
             context 'when permission failed' do
-              before do
-                sg_mock.stub_post(url, :list => listname, :email => [email.email]).
-                  to_return(:body => fixture('errors/forbidden.json'), :status => 403)
-              end
+              let(:stub_post) { sg_mock.stub_post(url, :list => listname, :email => [email.email]) }
               subject { service.delete(listname, email) }
-              it 'raises error' do
-                expect { subject }.to raise_error(REST::Errors::Forbidden)
-              end
+              it_behaves_like 'a forbidden response'
             end
           end
 

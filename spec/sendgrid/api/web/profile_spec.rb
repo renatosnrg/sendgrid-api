@@ -15,13 +15,13 @@ module Sendgrid
 
           describe '#get' do
             let(:url) { 'profile.get.json' }
+            let(:stub_post) { sg_mock.stub_post(url) }
+            subject { service.get }
 
             context 'when request is successfull' do
               before do
-                sg_mock.stub_post(url).to_return(:body => fixture('profile.json'))
+                stub_post.to_return(:body => fixture('profile.json'))
               end
-
-              subject { service.get }
 
               it 'performs the request' do
                 subject
@@ -47,38 +47,22 @@ module Sendgrid
             end
 
             context 'when permission failed' do
-              before do
-                sg_mock.stub_post(url).to_return(:body => fixture('errors/unauthorized.json'))
-              end
-
-              it 'raises error' do
-                expect { service.get }.to raise_error(REST::Errors::Unauthorized)
-              end
+              it_behaves_like 'an unauthorized response'
             end
           end
 
           describe '#set' do
             let(:url) { 'profile.set.json' }
             let(:profile) { Entities::Profile.new(:first_name => 'Brian', :last_name => 'O\'Neill') }
+            let(:stub_post) { sg_mock.stub_post(url, profile.as_json) }
+            subject { service.set(profile) }
 
             context 'when request is successfull' do
-              before do
-                sg_mock.stub_post(url, profile.as_json).to_return(:body => fixture('success.json'))
-              end
-
-              subject { service.set(profile) }
-
-              its(:success?) { should be_true }
+              it_behaves_like 'a success response'
             end
 
             context 'when permission failed' do
-              before do
-                sg_mock.stub_post(url, profile.as_json).to_return(:body => fixture('errors/unauthorized.json'))
-              end
-
-              it 'raises error' do
-                expect { service.set(profile) }.to raise_error(REST::Errors::Unauthorized)
-              end
+              it_behaves_like 'an unauthorized response'
             end
           end
 
