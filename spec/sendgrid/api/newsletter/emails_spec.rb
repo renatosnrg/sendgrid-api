@@ -149,23 +149,26 @@ module Sendgrid
 
           describe 'online tests', :online => true do
             include_examples 'online tests'
-            let(:listname) { 'sendgrid-api list test' }
+            let(:online) { Online.new(env_user, env_key) }
+            let(:list) { online.list_example }
+            let(:emails) { online.emails_example }
+            let(:email) { emails.first }
 
             context 'when credentials are valid' do
               let(:lists) { Newsletter::Lists::Services.new(resource) }
               let(:resource) { REST::Resource.new(env_user, env_key) }
 
               before do
-                lists.add(listname).success? or raise 'could not create the list'
+                lists.add(list).success? or raise 'could not create the list'
               end
               after do
-                lists.delete(listname).success? or raise 'could not remove the created list'
+                lists.delete(list).success? or raise 'could not remove the created list'
               end
 
               describe '#add' do
                 context 'when add an email successfully' do
                   it 'adds the email' do
-                    response = subject.add(listname, email)
+                    response = subject.add(list, email)
                     response.any?.should be_true
                     response.inserted.should == 1
                   end
@@ -173,7 +176,7 @@ module Sendgrid
 
                 context 'when add multiple emails successfully' do
                   it 'adds the emails' do
-                    response = subject.add(listname, emails)
+                    response = subject.add(list, emails)
                     response.any?.should be_true
                     response.inserted.should == 2
                   end
@@ -181,10 +184,10 @@ module Sendgrid
 
                 context 'when add an email that already exists' do
                   before do
-                    subject.add(listname, email)
+                    subject.add(list, email)
                   end
                   it 'do not add the email' do
-                    response = subject.add(listname, email)
+                    response = subject.add(list, email)
                     response.any?.should be_false
                     response.inserted.should == 0
                   end
@@ -193,19 +196,19 @@ module Sendgrid
 
               describe '#get' do
                 before do
-                  service.add(listname, emails)
+                  service.add(list, emails)
                 end
 
                 context 'when get all emails successfully' do
                   it 'gets the emails' do
-                    response = subject.get(listname)
+                    response = subject.get(list)
                     response.should have(2).items
                   end
                 end
 
                 context 'when get an email successfully' do
                   it 'gets the email' do
-                    response = subject.get(listname, email)
+                    response = subject.get(list, email)
                     response.should have(1).item
                   end
                 end
@@ -213,12 +216,12 @@ module Sendgrid
 
               describe '#delete' do
                 before do
-                  service.add(listname, emails)
+                  service.add(list, emails)
                 end
 
                 context 'when delete an email successfully' do
                   it 'deletes the email' do
-                    response = service.delete(listname, email)
+                    response = service.delete(list, email)
                     response.any?.should be_true
                     response.removed.should == 1
                   end
@@ -226,7 +229,7 @@ module Sendgrid
 
                 context 'when delete multiple emails successfully' do
                   it 'deletes the emails' do
-                    response = service.delete(listname, emails)
+                    response = service.delete(list, emails)
                     response.any?.should be_true
                     response.removed.should == 2
                   end
@@ -237,19 +240,19 @@ module Sendgrid
             context 'when credentials are invalid' do
               describe '#add' do
                 it 'raises an error' do
-                  expect { subject.add(listname, email) }.to raise_error(REST::Errors::Forbidden)
+                  expect { subject.add(list, email) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
 
               describe '#get' do
                 it 'raises an error' do
-                  expect { subject.get(listname, email) }.to raise_error(REST::Errors::Forbidden)
+                  expect { subject.get(list, email) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
 
               describe '#delete' do
                 it 'raises an error' do
-                  expect { subject.delete(listname, email) }.to raise_error(REST::Errors::Forbidden)
+                  expect { subject.delete(list, email) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
             end

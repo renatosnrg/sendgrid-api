@@ -70,18 +70,16 @@ module Sendgrid
             subject { service.get(sender_address) }
 
             context 'when get the sender address successfully' do
+              before do
+                stub_post.to_return(:body => fixture('sender_addresses/sender_address.json'))
+              end
+
               context 'with name' do
-                before do
-                  stub_post.to_return(:body => fixture('sender_addresses/sender_address.json'))
-                end
                 subject { service.get(identity) }
                 its(:identity) { should == 'sendgrid' }
               end
 
               context 'with object' do
-                before do
-                  stub_post.to_return(:body => fixture('sender_addresses/sender_address.json'))
-                end
                 its(:identity) { should == 'sendgrid' }
               end
             end
@@ -142,24 +140,8 @@ module Sendgrid
 
           describe 'online tests', :online => true do
             include_examples 'online tests'
-            let(:sender_address) do
-              Entities::SenderAddress.new(:identity => identity,
-                                          :name => name,
-                                          :email => email,
-                                          :address => address,
-                                          :city => city,
-                                          :state => state,
-                                          :zip => zip,
-                                          :country => country)
-            end
-            let(:identity) { 'sendgrid-api sender address test' }
-            let(:name) { 'Sendgrid' }
-            let(:email) { 'contact@sendgrid.com' }
-            let(:address) { '1065 N Pacificenter Drive, Suite 425' }
-            let(:city) { 'Anaheim' }
-            let(:state) { 'CA' }
-            let(:zip) { '92806' }
-            let(:country) { 'US' }
+            let(:online) { Online.new(env_user, env_key) }
+            let(:sender_address) { online.sender_address_example }
 
             context 'when credentials are valid' do
               let(:resource) { REST::Resource.new(env_user, env_key) }
@@ -189,6 +171,7 @@ module Sendgrid
                 context 'when the sender address is invalid' do
                   let(:email) { nil }
                   it 'raises an error' do
+                    sender_address.email = email
                     expect { subject.add(sender_address) }.to raise_error(Sendgrid::API::REST::Errors::BadRequest)
                   end
                 end
@@ -204,6 +187,7 @@ module Sendgrid
                     subject.delete(sender_address)
                   end
                   it 'edits the sender address' do
+                    sender_address.address = address
                     subject.edit(sender_address).success?.should be_true
                   end
                 end
@@ -238,8 +222,8 @@ module Sendgrid
                   end
                   it 'edits the sender address' do
                     sender = subject.get(sender_address)
-                    sender.name.should == name
-                    sender.address.should == address
+                    sender.name.should == sender_address.name
+                    sender.address.should == sender_address.address
                   end
                 end
 

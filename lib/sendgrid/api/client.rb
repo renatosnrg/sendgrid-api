@@ -4,6 +4,8 @@ require 'sendgrid/api/web/stats'
 require 'sendgrid/api/newsletter/lists'
 require 'sendgrid/api/newsletter/emails'
 require 'sendgrid/api/newsletter/sender_addresses'
+require 'sendgrid/api/newsletter/categories'
+require 'sendgrid/api/newsletter/marketing_emails'
 
 module Sendgrid
   module API
@@ -14,6 +16,8 @@ module Sendgrid
       include Newsletter::Lists
       include Newsletter::Emails
       include Newsletter::SenderAddresses
+      include Newsletter::Categories
+      include Newsletter::MarketingEmails
 
       attr_reader :user, :key
 

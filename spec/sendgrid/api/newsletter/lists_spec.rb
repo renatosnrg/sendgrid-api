@@ -158,7 +158,8 @@ module Sendgrid
 
           describe 'online tests', :online => true do
             include_examples 'online tests'
-            let(:listname) { 'sendgrid-api list test' }
+            let(:online) { Online.new(env_user, env_key) }
+            let(:list) { online.list_example }
             let(:newlistname) { 'sendgrid-api new list test' }
 
             context 'when credentials are valid' do
@@ -166,21 +167,21 @@ module Sendgrid
 
               describe '#add' do
                 after do
-                  subject.delete(listname).success? or raise 'could not remove the created list'
+                  subject.delete(list).success? or raise 'could not remove the created list'
                 end
 
                 context 'when add a list successfully' do
                   it 'adds a list' do
-                    subject.add(listname).success?.should be_true
+                    subject.add(list).success?.should be_true
                   end
                 end
 
                 context 'when list already exists' do
                   before do
-                    subject.add(listname).success? or raise 'could not create the list'
+                    subject.add(list).success? or raise 'could not create the list'
                   end
                   it 'raises an error' do
-                    expect { subject.add(listname) }.to raise_error(REST::Errors::UnprocessableEntity)
+                    expect { subject.add(list) }.to raise_error(REST::Errors::UnprocessableEntity)
                   end
                 end
               end
@@ -188,13 +189,13 @@ module Sendgrid
               describe '#edit' do
                 context 'when edit a list successfully' do
                   before do
-                    subject.add(listname).success? or raise 'could not create the list'
+                    subject.add(list).success? or raise 'could not create the list'
                   end
                   after do
                     subject.delete(newlistname).success? or raise 'could not remove the created list'
                   end
                   it 'edits a list' do
-                    subject.edit(listname, newlistname).success?.should be_true
+                    subject.edit(list, newlistname).success?.should be_true
                   end
                 end
 
@@ -206,21 +207,21 @@ module Sendgrid
                     subject.delete(newlistname).success? or raise 'could not remove the created list'
                   end
                   it 'raises an error' do
-                    expect { subject.edit(listname, newlistname) }.to raise_error(REST::Errors::Unauthorized)
+                    expect { subject.edit(list, newlistname) }.to raise_error(REST::Errors::Unauthorized)
                   end
                 end
 
                 context 'when list already exists' do
                   before do
-                    subject.add(listname).success? or raise 'could not create the list'
+                    subject.add(list).success? or raise 'could not create the list'
                     subject.add(newlistname).success? or raise 'could not create the list'
                   end
                   after do
-                    subject.delete(listname).success? or raise 'could not remove the created list'
+                    subject.delete(list).success? or raise 'could not remove the created list'
                     subject.delete(newlistname).success? or raise 'could not remove the created list'
                   end
                   it 'raises an error' do
-                    expect { subject.edit(listname, newlistname) }.to raise_error(REST::Errors::Unauthorized)
+                    expect { subject.edit(list, newlistname) }.to raise_error(REST::Errors::Unauthorized)
                   end
                 end
               end
@@ -228,16 +229,16 @@ module Sendgrid
               describe '#delete' do
                 context 'when delete a list successfully' do
                   before do
-                    subject.add(listname).success? or raise 'could not create the list'
+                    subject.add(list).success? or raise 'could not create the list'
                   end
                   it 'deletes a list' do
-                    subject.delete(listname).success?.should be_true
+                    subject.delete(list).success?.should be_true
                   end
                 end
 
                 context 'when list does not exist' do
                   it 'raises an error' do
-                    expect { subject.delete(listname) }.to raise_error(REST::Errors::UnprocessableEntity)
+                    expect { subject.delete(list) }.to raise_error(REST::Errors::UnprocessableEntity)
                   end
                 end
               end
@@ -245,10 +246,10 @@ module Sendgrid
               describe '#get' do
                 context 'when get all lists successfully' do
                   before do
-                    subject.add(listname).success? or raise 'could not create the list'
+                    subject.add(list).success? or raise 'could not create the list'
                   end
                   after do
-                    subject.delete(listname).success? or raise 'could not remove the created list'
+                    subject.delete(list).success? or raise 'could not remove the created list'
                   end
                   it 'gets a list' do
                     subject.get.should_not be_empty
@@ -257,19 +258,19 @@ module Sendgrid
 
                 context 'when get a list successfully' do
                   before do
-                    subject.add(listname).success? or raise 'could not create the list'
+                    subject.add(list).success? or raise 'could not create the list'
                   end
                   after do
-                    subject.delete(listname).success? or raise 'could not remove the created list'
+                    subject.delete(list).success? or raise 'could not remove the created list'
                   end
                   it 'gets a list' do
-                    subject.get(listname).should_not be_empty
+                    subject.get(list).should_not be_empty
                   end
                 end
 
                 context 'when list does not exist' do
                   it 'raises an error' do
-                    expect { subject.get(listname) }.to raise_error(REST::Errors::Unauthorized)
+                    expect { subject.get(list) }.to raise_error(REST::Errors::Unauthorized)
                   end
                 end
               end
@@ -278,22 +279,22 @@ module Sendgrid
             context 'when credentials are invalid' do
               describe '#add' do
                 it 'raises an error' do
-                  expect { subject.add(listname) }.to raise_error(REST::Errors::Forbidden)
+                  expect { subject.add(list) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
               describe '#edit' do
                 it 'raises an error' do
-                  expect { subject.edit(listname, newlistname) }.to raise_error(REST::Errors::Forbidden)
+                  expect { subject.edit(list, newlistname) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
               describe '#delete' do
                 it 'raises an error' do
-                  expect { subject.delete(listname) }.to raise_error(REST::Errors::Forbidden)
+                  expect { subject.delete(list) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
               describe '#get' do
                 it 'raises an error' do
-                  expect { subject.get(listname) }.to raise_error(REST::Errors::Forbidden)
+                  expect { subject.get(list) }.to raise_error(REST::Errors::Forbidden)
                 end
               end
             end

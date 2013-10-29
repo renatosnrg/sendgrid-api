@@ -12,9 +12,19 @@ module Sendgrid
           Entities::List.from_object(object)
         end
 
-        # Retrieved the list name.
+        # Retrieve the list name.
         def extract_listname(object)
           extract_list(object).list
+        end
+
+        # Retrieve the marketing email name
+        def extract_marketing_email(marketing_email)
+          case marketing_email
+          when ::String
+            marketing_email
+          when Entities::MarketingEmail
+            marketing_email.name
+          end
         end
 
       end
