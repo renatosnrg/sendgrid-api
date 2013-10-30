@@ -78,6 +78,17 @@ class Online
     end
   end
 
+  def add_marketing_email_with_list
+    add_marketing_email
+    add_list
+    add_recipient_list
+  end
+
+  def delete_marketing_email_with_list
+    delete_marketing_email
+    delete_list
+  end
+
   private
 
   # Check if some operation is completed or not.

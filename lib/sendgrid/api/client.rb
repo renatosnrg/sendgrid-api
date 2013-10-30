@@ -7,6 +7,7 @@ require 'sendgrid/api/newsletter/sender_addresses'
 require 'sendgrid/api/newsletter/categories'
 require 'sendgrid/api/newsletter/marketing_emails'
 require 'sendgrid/api/newsletter/recipients'
+require 'sendgrid/api/newsletter/schedule'
 
 module Sendgrid
   module API
@@ -20,6 +21,7 @@ module Sendgrid
       include Newsletter::Categories
       include Newsletter::MarketingEmails
       include Newsletter::Recipients
+      include Newsletter::Schedule
 
       attr_reader :user, :key
 
