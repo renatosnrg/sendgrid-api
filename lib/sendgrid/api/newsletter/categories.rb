@@ -1,6 +1,5 @@
 require 'sendgrid/api/service'
 require 'sendgrid/api/entities/category'
-require 'sendgrid/api/entities/marketing_email'
 require 'sendgrid/api/entities/response'
 require 'sendgrid/api/newsletter/utils'
 

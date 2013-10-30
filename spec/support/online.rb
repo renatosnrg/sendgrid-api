@@ -59,4 +59,45 @@ class Online
     client.sender_addresses.delete(sender_address_example)
   end
 
+  def add_list
+    client.lists.add(list_example)
+    client.emails.add(list_example, emails_example)
+  end
+
+  def delete_list
+    client.lists.delete(list_example)
+  end
+
+  def add_recipient_list
+    check_completed do
+      begin
+        client.recipients.add(list_example, marketing_email_example).success? 
+      rescue Sendgrid::API::REST::Errors::UnprocessableEntity
+        false
+      end
+    end
+  end
+
+  private
+
+  # Check if some operation is completed or not.
+  #
+  # @see http://support.sendgrid.com/hc/en-us/articles/200185208-SendGrid-Web-API-may-return-successful-but-doesn-t-mean-it-has-completed
+  # @param timeout [Fixnum] The maximum number of seconds to check the operation status. Default: 60 seconds.
+  # @param delay [Fixnum] The number of seconds between each check. Default: 3 seconds.
+  # @param &block [Block] The given block should return true if completed, otherwise false.
+  # @return [Bool] The operation status
+  def check_completed(timeout = 60, delay = 3)
+    start = Time.now
+    response = nil
+    loop do
+      response = yield
+      duration = Time.now - start
+      # puts "Checking operation - status: #{response.inspect} - duration: #{duration} seconds"
+      break if response || (duration > timeout)
+      sleep delay
+    end
+    response
+  end
+
 end

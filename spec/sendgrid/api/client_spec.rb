@@ -18,6 +18,7 @@ module Sendgrid
       it { should respond_to(:sender_addresses) }
       it { should respond_to(:categories) }
       it { should respond_to(:marketing_emails) }
+      it { should respond_to(:recipients) }
 
       its(:profile) { should_not be_nil }
       its(:stats) { should_not be_nil }
@@ -26,6 +27,7 @@ module Sendgrid
       its(:sender_addresses) { should_not be_nil }
       its(:categories) { should_not be_nil }
       its(:marketing_emails) { should_not be_nil }
+      its(:recipients) { should_not be_nil }
 
     end
   end

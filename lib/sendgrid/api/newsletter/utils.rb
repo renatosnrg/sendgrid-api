@@ -1,4 +1,5 @@
 require 'sendgrid/api/entities/list'
+require 'sendgrid/api/entities/marketing_email'
 
 module Sendgrid
   module API
