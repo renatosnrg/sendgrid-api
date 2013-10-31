@@ -17,7 +17,7 @@ module Sendgrid
               body = env[:body]
               status = env[:status].to_i
               if status != 200
-                message = body[:error] if body.is_a?(Hash)
+                message = body[:error] || body[:errors].join(', ') if body.is_a?(Hash)
                 error_class(status).new(message)
               else
                 nil

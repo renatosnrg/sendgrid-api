@@ -31,6 +31,8 @@ module Sendgrid
 
         def middleware
           @middleware ||= Faraday::Builder.new do |builder|
+            # checks for files in the payload, otherwise leaves everything untouched
+            builder.request :multipart
             # form-encode POST params
             builder.request :url_encoded
             # Parse response errors

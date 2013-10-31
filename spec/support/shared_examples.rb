@@ -85,10 +85,20 @@ end
 
 shared_examples 'a not scheduled response' do
   before do
-    stub_post.to_return(:body => fixture('errors/not_scheduled.json'), :status => 401)
+    stub_post.to_return(:body => fixture('errors/bad_request.json'), :status => 401)
   end
 
   it 'raises an error' do
     expect { subject }.to raise_error(Sendgrid::API::REST::Errors::Unauthorized)
+  end
+end
+
+shared_examples 'a bad request response' do
+  before do
+    stub_post.to_return(:body => fixture('errors/bad_request.json'), :status => 400)
+  end
+
+  it 'raises an error' do
+    expect { subject }.to raise_error(Sendgrid::API::REST::Errors::BadRequest)
   end
 end

@@ -13,3 +13,11 @@ end
 def disable_http
   WebMock.disable_net_connect!(:allow => 'coveralls.io')
 end
+
+def sample_file(options = {})
+  name = options[:name] || 'sample.txt'
+  type = options[:type] || 'plain/text'
+  content = options[:content] || 'This is my file content'
+  stream = StringIO.new(content)
+  Faraday::UploadIO.new(stream, type, name)
+end

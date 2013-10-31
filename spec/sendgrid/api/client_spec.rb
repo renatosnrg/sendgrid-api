@@ -13,6 +13,7 @@ module Sendgrid
 
       it { should respond_to(:profile) }
       it { should respond_to(:stats) }
+      it { should respond_to(:mail) }
       it { should respond_to(:lists) }
       it { should respond_to(:emails) }
       it { should respond_to(:sender_addresses) }
@@ -23,6 +24,7 @@ module Sendgrid
 
       its(:profile) { should_not be_nil }
       its(:stats) { should_not be_nil }
+      its(:mail) { should_not be_nil }
       its(:lists) { should_not be_nil }
       its(:emails) { should_not be_nil }
       its(:sender_addresses) { should_not be_nil }

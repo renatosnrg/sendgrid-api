@@ -8,13 +8,17 @@ module Sendgrid
     end
 
     def stub_post(path, params = {})
-      stub_request(:post, Sendgrid::API::REST::Resource::ENDPOINT + '/' + path).
+      stub_request(:post, uri(path)).
         with(:body => params.merge(authentication_params))
     end
 
     def a_post(path, params = {})
-      a_request(:post, Sendgrid::API::REST::Resource::ENDPOINT + '/' + path).
+      a_request(:post, uri(path)).
         with(:body => params.merge(authentication_params))
+    end
+
+    def uri(path)
+      Sendgrid::API::REST::Resource::ENDPOINT + '/' + path
     end
 
     private

@@ -41,6 +41,17 @@ module Sendgrid
 
                 it { should == Errors::BadRequest.new('error message') }
               end
+
+              context 'with multiple messages' do
+                let(:env) do
+                  { :status => 400,
+                    :body => { :errors => ['error message 1', 'error message 2'] } }
+                end
+
+                subject { described_class.from_response(env) }
+
+                it { should == Errors::BadRequest.new('error message 1, error message 2') }
+              end
             end
 
             context 'when response has body error' do
