@@ -31,12 +31,27 @@ module Sendgrid
                 it_behaves_like 'a success response'
               end
 
-              context 'with options' do
-                let(:at) { Time.now.to_s }
+              context 'with after option' do
                 let(:after) { 10 }
-                let(:stub_post) { sg_mock.stub_post(url, :name => marketing_email_name, :at => at, :after => after.to_s) }
-                subject { service.add(marketing_email_name, :at => at, :after => after) }
+                let(:stub_post) { sg_mock.stub_post(url, :name => marketing_email_name, :after => after.to_s) }
+                subject { service.add(marketing_email_name, :after => after) }
                 it_behaves_like 'a success response'
+              end
+
+              context 'with at option' do
+                context 'when at is a string object' do
+                  let(:at) { 'time in string' }
+                  let(:stub_post) { sg_mock.stub_post(url, :name => marketing_email_name, :at => at) }
+                  subject { service.add(marketing_email_name, :at => at) }
+                  it_behaves_like 'a success response'
+                end
+
+                context 'when at is a time object' do
+                  let(:at) { Time.now }
+                  let(:stub_post) { sg_mock.stub_post(url, :name => marketing_email_name, :at => at.strftime('%Y-%m-%d %H:%M:%S%:z')) }
+                  subject { service.add(marketing_email_name, :at => at) }
+                  it_behaves_like 'a success response'
+                end
               end
 
               context 'with invalid options' do
@@ -135,8 +150,15 @@ module Sendgrid
                   after do
                     online.delete_marketing_email_with_list
                   end
-                  it 'schedules a marketing email' do
-                    subject.add(marketing_email, :after => 10).success?.should be_true
+                  context 'with after option' do
+                    it 'schedules a marketing email' do
+                      subject.add(marketing_email, :after => 10).success?.should be_true
+                    end
+                  end
+                  context 'with at option' do
+                    it 'schedules a marketing email' do
+                      subject.add(marketing_email, :at => (Time.now + 10*60)).success?.should be_true
+                    end
                   end
                 end
 

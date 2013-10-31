@@ -25,6 +25,7 @@ module Sendgrid
           # @return [Response] An Entities::Response object.
           def add(marketing_email, options = {})
             options.keep_if {|key, value| [:at, :after].include?(key) }
+            options[:at] = format_time(options[:at]) if options.member?(:at)
             params = { :name => extract_marketing_email(marketing_email) }
             params.merge!(options) if options.any?
             perform_request(Entities::Response, 'newsletter/schedule/add.json', params)
@@ -48,6 +49,17 @@ module Sendgrid
           def delete(marketing_email)
             params = { :name => extract_marketing_email(marketing_email) }
             perform_request(Entities::Response, 'newsletter/schedule/delete.json', params)
+          end
+
+          private
+
+          def format_time(at)
+            case at
+            when ::String
+              at
+            when ::Time
+              at.strftime('%Y-%m-%d %H:%M:%S%:z')
+            end
           end
 
         end
