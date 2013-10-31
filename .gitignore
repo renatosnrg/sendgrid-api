@@ -1,4 +1,6 @@
 *.gem
 .bundle
-vendor
-coverage
+.yardoc
+vendor/*
+coverage/*
+doc/*

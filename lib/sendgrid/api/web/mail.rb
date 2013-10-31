@@ -30,7 +30,7 @@ module Sendgrid
           # @option options [String]  :files      Files to be attached.
           # @option options [String]  :content    Content IDs of the files to be used as inline images.
           # @option options [String]  :headers    A collection of key/value pairs in JSON format.
-          # @return [Response] An Entities::Response object.
+          # @return [Entities::Response] An Entities::Response object.
           def send(options = {})
             options['x-smtpapi'] = options.delete(:x_smtpapi) if options.member?(:x_smtpapi)
             perform_request(Entities::Response, 'mail.send.json', options)

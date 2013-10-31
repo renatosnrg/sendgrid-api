@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 group :development do
   gem "bundler", "~> 1.3"
   gem "rake"
+  gem "yard"
+  gem "redcarpet"
 end
 
 group :test do

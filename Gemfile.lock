@@ -25,6 +25,7 @@ GEM
     multi_json (1.8.0)
     multipart-post (1.2.0)
     rake (10.1.0)
+    redcarpet (3.0.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.14.1)
@@ -47,6 +48,7 @@ GEM
     webmock (1.15.0)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
+    yard (0.8.7.2)
 
 PLATFORMS
   ruby
@@ -55,7 +57,9 @@ DEPENDENCIES
   bundler (~> 1.3)
   coveralls (~> 0.7.0)
   rake
+  redcarpet
   rspec (~> 2.14.1)
   sendgrid-api!
   simplecov (~> 0.7.1)
   webmock (~> 1.15.0)
+  yard

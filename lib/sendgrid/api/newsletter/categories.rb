@@ -19,7 +19,7 @@ module Sendgrid
           #
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/categories.html#-create
           # @param category [String, Entities::Category] A category name or Entities::Category object.
-          # @return [Response] An Entities::Response object.
+          # @return [Entities::Response] An Entities::Response object.
           def create(category)
             params = { :category => extract_category(category) }
             perform_request(Entities::Response, 'newsletter/category/create.json', params)
@@ -30,7 +30,7 @@ module Sendgrid
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/categories.html#-add
           # @param marketing_email [String, Entities::MarketingEmail] An existing marketing email name or Entities::MarketingEmail object.
           # @param category [String, Entities::Category] A category name or Entities::Category object.
-          # @return [Response] An Entities::Response object.
+          # @return [Entities::Response] An Entities::Response object.
           def add(marketing_email, category)
             params = { :name => extract_marketing_email(marketing_email), :category => extract_category(category) }
             perform_request(Entities::Response, 'newsletter/category/add.json', params)
@@ -41,7 +41,7 @@ module Sendgrid
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/categories.html#-remove
           # @param marketing_email [String, Entities::MarketingEmail] An existing marketing email name or Entities::MarketingEmail object.
           # @param category [String, Entities::Category] A category name or Entities::Category object.
-          # @return [Response] An Entities::Response object.
+          # @return [Entities::Response] An Entities::Response object.
           def remove(marketing_email, category)
             params = { :name => extract_marketing_email(marketing_email), :category => extract_category(category) }
             perform_request(Entities::Response, 'newsletter/category/remove.json', params)
@@ -50,7 +50,7 @@ module Sendgrid
           # List all categories.
           #
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/categories.html#-list
-          # @return [Array<Category>] An array of Entities::Category objects.
+          # @return [Array<Entities::Category>] An array of Entities::Category objects.
           def list
             perform_request(Entities::Category, 'newsletter/category/list.json')
           end

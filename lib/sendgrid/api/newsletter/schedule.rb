@@ -22,7 +22,7 @@ module Sendgrid
           # @param options [Hash] A customizable set of options.
           # @option options [String] :at Date/Time to schedule marketing email Delivery. Date/Time must be provided in ISO 8601 format (YYYY-MM-DD HH:MM:SS+-HH:MM)
           # @option options [Fixnum] :after Number of minutes until delivery should occur. Must be a positive integer.
-          # @return [Response] An Entities::Response object.
+          # @return [Entities::Response] An Entities::Response object.
           def add(marketing_email, options = {})
             options.keep_if {|key, value| [:at, :after].include?(key) }
             options[:at] = format_time(options[:at]) if options.member?(:at)
@@ -35,7 +35,7 @@ module Sendgrid
           #
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/schedule.html#-get
           # @param marketing_email [String, Entities::MarketingEmail] A marketing email name or Entities::MarketingEmail object.
-          # @return [Schedule] An Entities::Schedule objects.
+          # @return [Entities::Schedule] An Entities::Schedule objects.
           def get(marketing_email)
             params = { :name => extract_marketing_email(marketing_email) }
             perform_request(Entities::Schedule, 'newsletter/schedule/get.json', params)
@@ -45,7 +45,7 @@ module Sendgrid
           #
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/schedule.html#-delete
           # @param marketing_email [String, Entities::MarketingEmail] A marketing email name or Entities::MarketingEmail object.
-          # @return [Response] An Entities::Response object.
+          # @return [Entities::Response] An Entities::Response object.
           def delete(marketing_email)
             params = { :name => extract_marketing_email(marketing_email) }
             perform_request(Entities::Response, 'newsletter/schedule/delete.json', params)

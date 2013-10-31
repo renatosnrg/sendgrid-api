@@ -21,7 +21,7 @@ module Sendgrid
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/emails.html#-add
           # @param list [String, Entities::List] A list name or Entities::List object.
           # @param emails [Array<Entities::Email>] A list of emails to be added. Limited to a 1000 entries maximum.
-          # @return [ResponseInsert] An Entities::ResponseInsert object.
+          # @return [Entities::ResponseInsert] An Entities::ResponseInsert object.
           def add(list, emails)
             params = { :list => extract_listname(list), :data => map_emails(emails, :to_json) }
             perform_request(Entities::ResponseInsert, 'newsletter/lists/email/add.json', params)
@@ -44,7 +44,7 @@ module Sendgrid
           # @see http://sendgrid.com/docs/API_Reference/Marketing_Emails_API/emails.html#-delete
           # @param list [String, Entities::List] A list name or Entities::List object.
           # @param emails [Entities::Email, Array<Entities::Email>] An email or list of emails to be removed.
-          # @return [ResponseRemove] An Entities::ResponseRemove object.
+          # @return [Entities::ResponseRemove] An Entities::ResponseRemove object.
           def delete(list, emails)
             params = { :list => extract_listname(list), :email => map_emails(emails, :email) }
             perform_request(Entities::ResponseRemove, 'newsletter/lists/email/delete.json', params)
