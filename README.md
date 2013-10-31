@@ -113,8 +113,14 @@ response = client.lists.delete(list)
 
 ```ruby
 # create email objects
-email1 = Sendgrid::API::Entities::Email.new(:email => 'johndoe@example.com', :name => 'John Doe')
-email2 = Sendgrid::API::Entities::Email.new(:email => 'brian@example.com', :name => 'Brian')
+email1 = Sendgrid::API::Entities::Email.new(
+            :email => 'johndoe@example.com',
+            :name => 'John Doe'
+         )
+email2 = Sendgrid::API::Entities::Email.new(
+            :email => 'brian@example.com',
+            :name => 'Brian'
+         )
 emails = [email1, email2]
 listname = 'sendgrid-api list test'
 # add emails to a list
