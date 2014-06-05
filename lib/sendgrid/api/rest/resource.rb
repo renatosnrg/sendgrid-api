@@ -30,7 +30,7 @@ module Sendgrid
         end
 
         def middleware
-          @middleware ||= Faraday::Builder.new do |builder|
+          @middleware ||= Faraday::RackBuilder.new do |builder|
             # checks for files in the payload, otherwise leaves everything untouched
             builder.request :multipart
             # form-encode POST params

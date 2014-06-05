@@ -8,7 +8,13 @@ module Sendgrid
         class ParseJson < Faraday::Response::Middleware
 
           def parse(body)
-            JSON.parse(body, :symbolize_names => true) if body
+            JSON.parse(body, :symbolize_names => true) unless blank?(body)
+          end
+
+          private
+
+          def blank?(string)
+            string.respond_to?(:empty?) ? !!string.empty? : !string
           end
 
         end
