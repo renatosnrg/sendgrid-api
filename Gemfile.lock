@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sendgrid-api (0.0.3)
+    sendgrid-api (0.0.4)
       faraday (~> 0.9.0)
       json (~> 1.8.1)
 
