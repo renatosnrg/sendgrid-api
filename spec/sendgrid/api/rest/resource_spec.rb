@@ -13,7 +13,7 @@ module Sendgrid
         its(:key) { should == key }
 
         it 'should have a valid ENDPOINT' do
-          described_class::ENDPOINT.should == 'https://sendgrid.com/api'
+          described_class::ENDPOINT.should == 'https://api.sendgrid.com/api'
         end
 
         describe '#post' do
