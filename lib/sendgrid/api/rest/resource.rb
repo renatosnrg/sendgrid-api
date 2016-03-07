@@ -9,7 +9,7 @@ module Sendgrid
 
         attr_reader :user, :key
 
-        ENDPOINT = 'https://sendgrid.com/api'.freeze
+        ENDPOINT = 'https://api.sendgrid.com/api'.freeze
 
         def initialize(user, key)
           @user = user

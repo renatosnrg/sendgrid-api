@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 group :development do
-  gem "bundler", "~> 1.6.2"
+  gem "bundler", "~> 1.6"
   gem "rake", "~> 10.3.2"
   gem "yard", "~> 0.8.7.4"
   gem "redcarpet", "~> 3.1.2"

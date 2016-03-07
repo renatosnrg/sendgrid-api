@@ -4,3 +4,5 @@
 vendor/*
 coverage/*
 doc/*
+.ruby-version
+.ruby-gemset
