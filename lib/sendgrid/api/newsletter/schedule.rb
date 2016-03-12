@@ -58,7 +58,7 @@ module Sendgrid
             when ::String
               at
             when ::Time
-              at.strftime('%Y-%m-%d %H:%M:%S%:z')
+              at.iso8601
             end
           end
 
